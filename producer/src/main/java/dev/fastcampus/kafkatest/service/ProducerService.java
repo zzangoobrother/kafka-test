@@ -20,7 +20,13 @@ public class ProducerService {
     }
 
     public void publish(String message) {
-        CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send(TOPIC_NAME, message);
+        StringBuilder sb = new StringBuilder();
+        while (sb.length() < 1024 * 1024 * 1.5) {
+            sb.append("1");
+        }
+
+        log.info("message size : {}", sb.length());
+        CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send(TOPIC_NAME, sb.toString());
         future.whenComplete((result, ex) -> {
             if (ex == null) {
                 log.info("send : {}, offset : {}", message, result.getRecordMetadata().offset());

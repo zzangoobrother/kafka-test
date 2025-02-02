@@ -12,6 +12,6 @@ public class ConsumerController {
 
     @KafkaListener(topics = TOPIC_NAME)
     public void listen(String message) {
-        log.info("consumer message : {}", message);
+        log.info("consumer message size : {}", message.length());
     }
 }

@@ -18,11 +18,12 @@ public class KafkaConfig {
 
     @Bean
     public ProducerFactory<String, String> producerFactory() {
+        int i = (int) (1024 * 1024 * 1.6);
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVER);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        configProps.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG, "1572864");
+        configProps.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG, String.valueOf(i));
 
         return new DefaultKafkaProducerFactory<>(configProps);
     }
