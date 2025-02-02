@@ -14,7 +14,7 @@ public class ProducerController {
     }
 
     @GetMapping("/publish")
-    public void publish(String message) {
-        producerService.publish(message);
+    public void publish() {
+        producerService.publish();
     }
 }

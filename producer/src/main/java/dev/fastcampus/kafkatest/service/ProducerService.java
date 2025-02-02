@@ -19,19 +19,52 @@ public class ProducerService {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void publish(String message) {
+    public void publish() {
         StringBuilder sb = new StringBuilder();
-        while (sb.length() < 1024 * 1024 * 1.5) {
+        while (sb.length() < 1024 * 1024 * 0.5) {
             sb.append("1");
         }
 
         log.info("message size : {}", sb.length());
-        CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send(TOPIC_NAME, sb.toString());
+
+        CompletableFuture.allOf(
+                create(sb.toString()),
+                create(sb.toString()),
+                create(sb.toString()),
+                create(sb.toString()),
+                create(sb.toString()),
+                create(sb.toString()),
+                create(sb.toString()),
+                create(sb.toString()),
+                create(sb.toString()),
+                create(sb.toString())
+        ).join();
+
+
+    }
+
+    private CompletableFuture create(String message) {
+        return CompletableFuture.allOf(
+                CompletableFuture.runAsync(() -> send(message)),
+                CompletableFuture.runAsync(() -> send(message)),
+                CompletableFuture.runAsync(() -> send(message)),
+                CompletableFuture.runAsync(() -> send(message)),
+                CompletableFuture.runAsync(() -> send(message)),
+                CompletableFuture.runAsync(() -> send(message)),
+                CompletableFuture.runAsync(() -> send(message)),
+                CompletableFuture.runAsync(() -> send(message)),
+                CompletableFuture.runAsync(() -> send(message)),
+                CompletableFuture.runAsync(() -> send(message))
+        );
+    }
+
+    private void send(String message) {
+        CompletableFuture<SendResult<String, String>> future = kafkaTemplate.send(TOPIC_NAME, message);
         future.whenComplete((result, ex) -> {
             if (ex == null) {
-                log.info("send : {}, offset : {}", message, result.getRecordMetadata().offset());
+                log.info("send size : {}, offset : {}", message.length(), result.getRecordMetadata().offset());
             } else {
-                log.info("failed : {}, error message : {}", message, ex.getMessage());
+                log.info("failed size : {}, error message : {}", message.length(), ex.getMessage());
             }
         });
     }
