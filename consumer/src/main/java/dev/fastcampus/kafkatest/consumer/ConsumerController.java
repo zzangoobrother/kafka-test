@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConsumerController {
 
-    private static final String TOPIC_NAME = "topic-test";
+    private static final String TOPIC_NAME = "topic-test-2";
 
     @KafkaListener(topics = TOPIC_NAME)
     public void listen(String message) {

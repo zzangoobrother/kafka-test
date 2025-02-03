@@ -15,7 +15,7 @@ import java.util.Map;
 public class KafkaConfig {
 
     private static final String BOOTSTRAP_SERVER = "localhost:29092";
-    private final static String GROUP_ID = "group-test";
+    private final static String GROUP_ID = "group-test-2";
 
     @Bean
     public ConsumerFactory<String, Object> consumerFactory() {
@@ -35,6 +35,7 @@ public class KafkaConfig {
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
+        factory.setConcurrency(5);
         return factory;
     }
 }
