@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import org.springframework.kafka.listener.ContainerProperties;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +28,8 @@ public class KafkaConfig {
         configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         configProps.put(ConsumerConfig.MAX_PARTITION_FETCH_BYTES_CONFIG, String.valueOf(i));
+        configProps.put(ConsumerConfig.FETCH_MIN_BYTES_CONFIG, "524288");
+        configProps.put(ConsumerConfig.FETCH_MAX_BYTES_CONFIG, String.valueOf(i));
 
         return new DefaultKafkaConsumerFactory<>(configProps);
     }
@@ -36,6 +39,10 @@ public class KafkaConfig {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         factory.setConcurrency(5);
+        factory.setBatchListener(true);
+
+        ContainerProperties containerProperties = factory.getContainerProperties();
+        containerProperties.setAckMode(ContainerProperties.AckMode.MANUAL_IMMEDIATE);
         return factory;
     }
 }

@@ -11,7 +11,7 @@ import java.util.concurrent.CompletableFuture;
 @Service
 public class ProducerService {
 
-    private static final String TOPIC_NAME = "topic-test-2";
+    private static final String TOPIC_NAME = "topic-test-1";
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
