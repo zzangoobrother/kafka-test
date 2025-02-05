@@ -10,9 +10,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConsumerController {
 
-    private static final String TOPIC_NAME = "topic-test-1";
+    private static final String TOPIC_NAME1 = "topic-test-1";
+    private static final String TOPIC_NAME2 = "topic-test-2";
 
-    @KafkaListener(topics = TOPIC_NAME)
+    @KafkaListener(topics = {TOPIC_NAME1, TOPIC_NAME2})
     public void listen(ConsumerRecords<String, String> records, Acknowledgment acknowledgment) {
         records.forEach(record -> log.info("consumer message size : {}", record.toString().length()));
 

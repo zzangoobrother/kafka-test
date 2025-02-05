@@ -25,6 +25,7 @@ public class KafkaConfig {
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG, String.valueOf(i));
         configProps.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "lz4");
+        configProps.put(ProducerConfig.ACKS_CONFIG, "1");
 
         return new DefaultKafkaProducerFactory<>(configProps);
     }

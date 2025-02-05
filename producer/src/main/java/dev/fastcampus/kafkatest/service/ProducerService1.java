@@ -9,13 +9,13 @@ import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @Service
-public class ProducerService {
+public class ProducerService1 {
 
     private static final String TOPIC_NAME = "topic-test-1";
 
     private final KafkaTemplate<String, String> kafkaTemplate;
 
-    public ProducerService(KafkaTemplate<String, String> kafkaTemplate) {
+    public ProducerService1(KafkaTemplate<String, String> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
