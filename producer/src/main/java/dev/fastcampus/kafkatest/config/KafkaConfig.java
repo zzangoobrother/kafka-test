@@ -26,6 +26,7 @@ public class KafkaConfig {
         configProps.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG, String.valueOf(i));
         configProps.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "lz4");
         configProps.put(ProducerConfig.ACKS_CONFIG, "1");
+        configProps.put(ProducerConfig.LINGER_MS_CONFIG, "50");
 
         return new DefaultKafkaProducerFactory<>(configProps);
     }
