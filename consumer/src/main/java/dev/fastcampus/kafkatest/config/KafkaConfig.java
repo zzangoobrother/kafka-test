@@ -29,7 +29,21 @@ public class KafkaConfig {
         configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         configProps.put(ConsumerConfig.MAX_PARTITION_FETCH_BYTES_CONFIG, String.valueOf(i));
         configProps.put(ConsumerConfig.FETCH_MIN_BYTES_CONFIG, "524288");
-        configProps.put(ConsumerConfig.FETCH_MAX_BYTES_CONFIG, String.valueOf(i));
+
+        // 해설 듣고 추가
+        configProps.put(ConsumerConfig.FETCH_MAX_WAIT_MS_CONFIG, "100");
+
+        int fetchMinBytes = (int) (1024 * 1024 * 0.8);
+        configProps.put(ConsumerConfig.FETCH_MIN_BYTES_CONFIG, String.valueOf(fetchMinBytes));
+
+        int fetchMaxBytes = (int) (1024 * 1024 * 0.5);
+        configProps.put(ConsumerConfig.FETCH_MAX_BYTES_CONFIG, String.valueOf(fetchMaxBytes));
+
+        configProps.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "1200");
+
+        configProps.put(ConsumerConfig.MAX_POLL_INTERVAL_MS_CONFIG, "20");
+
+
 
         return new DefaultKafkaConsumerFactory<>(configProps);
     }
@@ -38,7 +52,7 @@ public class KafkaConfig {
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
-        factory.setConcurrency(10);
+        factory.setConcurrency(14);
         factory.setBatchListener(true);
 
         ContainerProperties containerProperties = factory.getContainerProperties();

@@ -23,7 +23,7 @@ public class KafkaConfig {
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVER);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        configProps.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG, String.valueOf(i));
+        configProps.put(ProducerConfig.MAX_REQUEST_SIZE_CONFIG, String.valueOf(i)); // 1.6MB 이유는 header 때문에 선택, 순수 message가 1.5MB라 판단
         configProps.put(ProducerConfig.COMPRESSION_TYPE_CONFIG, "lz4");
         configProps.put(ProducerConfig.ACKS_CONFIG, "1");
         configProps.put(ProducerConfig.LINGER_MS_CONFIG, "50");

@@ -8,7 +8,7 @@
 ### Consumer
 - max.partition.fetch.bytes : 파티션당 가져올 최대 메시지 크기
 - fetch.min.bytes : 한번 요청에 가져와야할 최소 메시지 크기
-- fetch.max.bytes : 한번 요청에 가져와야할 최댜 메시지 크기
+- fetch.max.bytes : 한번 요청에 가져와야할 최대 메시지 크기
 - Concurrency : consumer의 thread 개수 지정
 - BatchListener : n개의 레코드를 동시에 가져오는 방안
 - AckMode : 스프링 kafka에서 사용하는 커밋 종류 설정
